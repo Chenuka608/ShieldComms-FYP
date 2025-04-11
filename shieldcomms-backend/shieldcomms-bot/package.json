@@ -2,10 +2,14 @@
   "name": "shieldcomms-bot",
   "version": "1.0.0",
   "main": "discordBot.js",
+  "description": "Multi-channel phishing detection bots for ShieldComms",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node discordBot.js",
+    "start:discord": "node discordBot.js",
+    "start:telegram": "node telegramBot.js",
+    "start:email": "node emailBot.js",
+    "start:all": "node discordBot.js & node telegramBot.js & node emailBot.js"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -14,6 +18,5 @@
     "dotenv": "^16.4.7",
     "mailslurp-client": "^15.21.0",
     "node-telegram-bot-api": "^0.66.0"
-  },
-  "description": ""
+  }
 }
