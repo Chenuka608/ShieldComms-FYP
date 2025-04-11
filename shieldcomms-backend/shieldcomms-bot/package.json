@@ -1,0 +1,19 @@
+{
+  "name": "shieldcomms-bot",
+  "version": "1.0.0",
+  "main": "discordBot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "discord.js": "^14.18.0",
+    "dotenv": "^16.4.7",
+    "mailslurp-client": "^15.21.0",
+    "node-telegram-bot-api": "^0.66.0"
+  },
+  "description": ""
+}

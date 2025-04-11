@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./shieldcomms-backend
+    container_name: node_backend
+    ports:
+      - '5000:5000'
+    environment:
+      MONGO_URI: mongodb+srv://chenuka478:2GTHqC2tagH3O@cluster0.gkg8w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      JWT_SECRET: 0b2f8c78531839425b32ce34bc466f9ce5e761bff50e13e7c1d674fb0aed411e655621101da0c342388ddc468bd10505726655a17323cf37acd76d446e39ec54
+      DISCORD_CLIENT_ID: 1357717349058347059
+      DISCORD_CLIENT_SECRET: ERYR6fO2L-PmfiKUSFWoQNKcMiPMMEQ2
+      DISCORD_REDIRECT_URI: http://localhost:5000/auth/discord/callback
+    depends_on:
+      - model
+
+  model:
+    build:
+      context: ./model_api
+    container_name: ml_model
+    ports:
+      - '6000:6000'

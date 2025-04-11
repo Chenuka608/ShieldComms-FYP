@@ -1,0 +1,13 @@
+node_modules/
+.env
+.venv/
+dist/
+__pycache__/
+*.pyc
+*.pkl
+*.h5
+*.pb
+*.dll
+*.db
+.vs/
+venv/
