@@ -83,3 +83,8 @@ async def predict_email(input_data: EmailInput):
         "non_phishing_probability": round(non_phishing_prob * 100, 2),
         "phishing_score": int(phishing_score_val[0][0])
     }
+if __name__ == "__main__":
+    import uvicorn
+    import os
+    port = int(os.environ.get("PORT", 8080))  # ⬅️ Cloud Run injects PORT env var
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
