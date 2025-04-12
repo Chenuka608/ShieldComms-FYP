@@ -162,7 +162,7 @@ app.post('/check-phishing', authenticate, async (req, res) => {
 // ===== DISCORD LOGIN =====
 const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
-const DISCORD_REDIRECT_URI = process.env.DISCORD_REDIRECT_URI || "http://localhost:5000/auth/discord/callback";
+const DISCORD_REDIRECT_URI = process.env.DISCORD_REDIRECT_URI || "https://shieldcomms-backend-302307126408.us-central1.run.app/auth/discord/callback";
 
 app.get("/auth/discord", (req, res) => {
   const discordOAuthUrl = `https://discord.com/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(DISCORD_REDIRECT_URI)}&response_type=code&scope=identify`;
@@ -196,7 +196,7 @@ app.get("/auth/discord/callback", async (req, res) => {
       expiresIn: '1h'
     });
 
-    res.redirect(`http://localhost:3000/application?token=${token}`);
+    res.redirect(`https://shield-comms-fyp-t69w.vercel.app/application?token=${token}`);
   } catch (error) {
     console.error("Discord OAuth Error:", error.message);
     res.status(500).send("Login failed");
