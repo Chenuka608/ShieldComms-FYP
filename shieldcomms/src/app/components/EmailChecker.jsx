@@ -13,7 +13,7 @@ const EmailChecker = () => {
   useEffect(() => {
     const fetchEmails = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/email/messages");
+        const res = await axios.get("https://shieldcomms-backend-302307126408.us-central1.run.app/api/email/messages");
         const sorted = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setEmails(sorted);
       } catch (error) {

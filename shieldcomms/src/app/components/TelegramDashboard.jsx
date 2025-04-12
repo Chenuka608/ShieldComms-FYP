@@ -13,7 +13,7 @@ const TelegramDashboard = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/telegram/messages");
+        const res = await axios.get("https://shieldcomms-backend-302307126408.us-central1.run.app/api/telegram/messages");
         const sorted = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setMessages(sorted);
       } catch (error) {

@@ -11,3 +11,5 @@ __pycache__/
 *.db
 .vs/
 venv/
+.env
+*.env.*
