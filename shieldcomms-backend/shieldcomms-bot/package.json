@@ -4,7 +4,7 @@
   "main": "discordBot.js",
   "description": "Multi-channel phishing detection bots for ShieldComms",
   "scripts": {
-    "start": "node discordBot.js",
+    "start": "node allBots.js",
     "start:discord": "node discordBot.js",
     "start:telegram": "node telegramBot.js",
     "start:email": "node emailBot.js",
