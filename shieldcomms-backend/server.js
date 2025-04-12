@@ -148,7 +148,7 @@ app.post('/check-phishing', authenticate, async (req, res) => {
     const { text } = req.body;
 
     // ✅ Calls FastAPI ML backend
-    const response = await axios.post('http://localhost:6000/predict', { text });
+    const response = await axios.post('https://shieldcomms-fyp.onrender.com/predict', { text });
 
     // ✅ Returns model result to frontend
     res.json(response.data);
