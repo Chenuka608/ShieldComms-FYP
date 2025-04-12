@@ -18,7 +18,12 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://shield-comms-fyp-t69w.vercel.app"],
+    credentials: true,
+  })
+);
 
 // ⬅️ Socket.IO setup
 const server = http.createServer(app);
