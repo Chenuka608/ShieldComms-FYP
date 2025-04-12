@@ -25,7 +25,7 @@ const EmailChecker = () => {
 
     fetchEmails();
 
-    const socket = io("http://localhost:5000");
+    const socket = io("https://shieldcomms-backend-302307126408.us-central1.run.app");
 
     socket.on("connect", () => {
       console.log("✅ Connected to socket.io server (email)");

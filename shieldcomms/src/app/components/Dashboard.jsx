@@ -15,7 +15,7 @@ const DiscordDashboard = () => {
 
     const fetchMessages = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/discord/messages", {
+        const res = await axios.get("https://shieldcomms-backend-302307126408.us-central1.run.app/api/discord/messages", {
           headers: { Authorization: `Bearer ${token}` }
         });
         const sorted = res.data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
@@ -30,7 +30,7 @@ const DiscordDashboard = () => {
     fetchMessages();
     const intervalId = setInterval(fetchMessages, 300000);
 
-    const socket = io("http://localhost:5000");
+    const socket = io("https://shieldcomms-backend-302307126408.us-central1.run.app");
     socket.on("new_discord_message", (msg) => {
       const pred = Number(msg.prediction);
       if (pred === 1) {

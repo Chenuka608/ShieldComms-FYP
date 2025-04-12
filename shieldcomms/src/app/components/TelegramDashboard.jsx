@@ -26,7 +26,7 @@ const TelegramDashboard = () => {
     fetchMessages();
     const intervalId = setInterval(fetchMessages, 300000);
 
-    const socket = io("http://localhost:5000");
+    const socket = io("https://shieldcomms-backend-302307126408.us-central1.run.app");
     socket.on("new_telegram_message", (msg) => {
       const verdict = String(msg.prediction).trim().toLowerCase();
       if (verdict.includes("phishing") || Number(msg.prediction) === 1) {
