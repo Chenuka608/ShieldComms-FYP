@@ -4,6 +4,20 @@ import numpy as np
 import joblib
 import tensorflow as tf
 import re
+import os
+import gdown
+
+# Download model and vectorizer if not present
+def download_from_drive():
+    model_url = "https://drive.google.com/uc?id=1xJTUfLUN-HQxmhvj5j66tyX5EVAxeRDV"
+    vectorizer_url = "https://drive.google.com/uc?id=1BK62H6MvXV1L3tPDeLE8AR-gMyflkmDJ"
+
+    if not os.path.exists("ShieldCommsML.h5"):
+        gdown.download(model_url, "ShieldCommsML.h5", quiet=False)
+    if not os.path.exists("tfidf_vectorizer.pkl"):
+        gdown.download(vectorizer_url, "tfidf_vectorizer.pkl", quiet=False)
+
+download_from_drive()
 
 # Load model and vectorizer
 model = tf.keras.models.load_model("ShieldCommsML.h5")
@@ -83,8 +97,9 @@ async def predict_email(input_data: EmailInput):
         "non_phishing_probability": round(non_phishing_prob * 100, 2),
         "phishing_score": int(phishing_score_val[0][0])
     }
+
+# ✅ Run with Uvicorn (for Cloud Run or Render)
 if __name__ == "__main__":
     import uvicorn
-    import os
-    port = int(os.environ.get("PORT", 8080))  # ⬅️ Cloud Run injects PORT env var
+    port = int(os.environ.get("PORT", 8080))  # Default for Cloud Run
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
