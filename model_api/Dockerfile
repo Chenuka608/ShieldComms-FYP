@@ -20,5 +20,5 @@ COPY . .
 # Expose port 8080 for Cloud Run
 EXPOSE 8080
 
-# ✅ ✅ Correct entrypoint for FastAPI
+# ✅ Correct way to start FastAPI with uvicorn
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
