@@ -24,9 +24,16 @@ const TelegramDashboard = () => {
     };
 
     fetchMessages();
-    const intervalId = setInterval(fetchMessages, 300000);
 
-    const socket = io("https://shieldcomms-backend-302307126408.us-central1.run.app");
+    const socket = io("https://shieldcomms-backend-302307126408.us-central1.run.app", {
+      transports: ["websocket"],
+      path: "/socket.io"
+    });
+
+    socket.on("connect", () => {
+      console.log("✅ Connected to socket.io server (telegram)");
+    });
+
     socket.on("new_telegram_message", (msg) => {
       const verdict = String(msg.prediction).trim().toLowerCase();
       if (verdict.includes("phishing") || Number(msg.prediction) === 1) {
@@ -50,7 +57,6 @@ const TelegramDashboard = () => {
     }
 
     return () => {
-      clearInterval(intervalId);
       socket.disconnect();
     };
   }, []);

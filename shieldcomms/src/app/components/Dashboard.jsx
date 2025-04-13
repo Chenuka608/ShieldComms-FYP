@@ -28,9 +28,20 @@ const DiscordDashboard = () => {
     };
 
     fetchMessages();
+
+    // ⏰ Refresh every 5 minutes
     const intervalId = setInterval(fetchMessages, 300000);
 
-    const socket = io("https://shieldcomms-backend-302307126408.us-central1.run.app");
+    // 🔌 Real-time socket connection (force websocket)
+    const socket = io("https://shieldcomms-backend-302307126408.us-central1.run.app", {
+      transports: ["websocket"],
+      path: "/socket.io"
+    });
+
+    socket.on("connect", () => {
+      console.log("🟢 Socket connected to backend!");
+    });
+
     socket.on("new_discord_message", (msg) => {
       const pred = Number(msg.prediction);
       if (pred === 1) {
@@ -117,8 +128,6 @@ const DiscordDashboard = () => {
           >
             🔙 Back to Social Logins
           </button>
-
-          
         </div>
 
         {showAlert && (

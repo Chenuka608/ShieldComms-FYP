@@ -25,7 +25,11 @@ const EmailChecker = () => {
 
     fetchEmails();
 
-    const socket = io("https://shieldcomms-backend-302307126408.us-central1.run.app");
+    // 🔌 Real-time socket with websocket transport forced
+    const socket = io("https://shieldcomms-backend-302307126408.us-central1.run.app", {
+      transports: ["websocket"],
+      path: "/socket.io"
+    });
 
     socket.on("connect", () => {
       console.log("✅ Connected to socket.io server (email)");
@@ -126,7 +130,8 @@ const EmailChecker = () => {
                   </p>
 
                   <p className="text-sm text-gray-700">
-                    📊 <strong>Phishing:</strong> {parseFloat(email.phishing_probability).toFixed(2)}% | <strong>Legit:</strong> {parseFloat(email.non_phishing_probability).toFixed(2)}%
+                    📊 <strong>Phishing:</strong> {parseFloat(email.phishing_probability).toFixed(2)}% |{" "}
+                    <strong>Legit:</strong> {parseFloat(email.non_phishing_probability).toFixed(2)}%
                   </p>
 
                   <p className="text-xs text-gray-500 mt-2">
