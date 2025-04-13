@@ -8,11 +8,10 @@ const cors = require('cors');
 const axios = require('axios');
 const DiscordMessage = require('./models/DiscordMessage');
 const TelegramMessage = require('./models/TelegramMessage');
-const EmailMessage = require('./models/EmailMessage')
+const EmailMessage = require('./models/EmailMessage');
 
-
-const http = require('http'); // ⬅️ Added for socket.io
-const { Server } = require('socket.io'); // ⬅️ Added for socket.io
+const http = require('http'); // ⬅️ Required for socket.io
+const { Server } = require('socket.io'); // ⬅️ Required for socket.io
 
 dotenv.config();
 
@@ -25,6 +24,10 @@ app.use(
   })
 );
 
+// ✅ FIX: define server BEFORE using in socket.io
+const server = http.createServer(app);
+
+// ⬅️ Socket.IO setup
 const io = new Server(server, {
   cors: {
     origin: ["http://localhost:3000", "https://shield-comms-fyp-t69w.vercel.app"],
@@ -33,10 +36,10 @@ const io = new Server(server, {
   path: "/socket.io"
 });
 
-
 io.on("connection", (socket) => {
   console.log("🟢 Socket connected:", socket.id);
 });
+
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {})
