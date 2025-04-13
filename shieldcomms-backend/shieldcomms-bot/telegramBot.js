@@ -1,12 +1,10 @@
 const TelegramBot = require("node-telegram-bot-api");
 const axios = require("axios");
-const dotenv = require("dotenv");
-
-
+require("dotenv").config(); // ✅ Loads .env
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
 if (!token) {
-  console.error("❌ Telegram bot token not found. Check .env.telegram");
+  console.error("❌ Telegram bot token not found.");
   process.exit(1);
 }
 
@@ -28,8 +26,8 @@ bot.on("message", async (msg) => {
   }
 
   try {
-    // 🔍 Send to ML model
-    const response = await axios.post(" https://shieldcomms-backend-302307126408.us-central1.run.app/predict", {
+    // 🔍 Send message to ML model
+    const response = await axios.post("https://shieldcomms-backend-302307126408.us-central1.run.app/predict", {
       text: messageText,
     });
 
@@ -50,7 +48,7 @@ bot.on("message", async (msg) => {
     }
 
     // 💾 Log to backend
-    await axios.post(" https://shieldcomms-backend-302307126408.us-central1.run.app/log-telegram-message", {
+    await axios.post("https://shieldcomms-backend-302307126408.us-central1.run.app/log-telegram-message", {
       userId: chatId,
       username,
       message: messageText,

@@ -36,7 +36,7 @@ async function monitorInbox() {
 
           console.log(`📨 Processing Email: ${email.subject}`);
 
-          const mlRes = await axios.post(" https://shieldcomms-backend-302307126408.us-central1.run.app/predict", {
+          const mlRes = await axios.post("https://shieldcomms-backend-302307126408.us-central1.run.app/predict", {
             text: email.body,
           });
 
@@ -46,7 +46,7 @@ async function monitorInbox() {
             non_phishing_probability,
           } = mlRes.data;
 
-          await axios.post(" https://shieldcomms-backend-302307126408.us-central1.run.app/log-email-message", {
+          await axios.post("https://shieldcomms-backend-302307126408.us-central1.run.app/log-email-message", {
             sender: email.from?.[0]?.emailAddress || "Unknown Sender",
             subject: email.subject || "(No Subject)",
             body: email.body,
