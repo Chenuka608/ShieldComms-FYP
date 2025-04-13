@@ -46,7 +46,7 @@ async function monitorInbox() {
             non_phishing_probability,
           } = mlRes.data;
 
-          await axios.post("https://shieldcomms-backend.com/log-email-message", {
+          await axios.post("https://shieldcomms-fyp-production.up.railway.app/log-email-message", {
             sender: email.from?.[0]?.emailAddress || "Unknown Sender",
             subject: email.subject || "(No Subject)",
             body: email.body,

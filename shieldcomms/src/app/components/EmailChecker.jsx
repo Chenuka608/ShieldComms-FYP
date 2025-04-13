@@ -13,7 +13,7 @@ const EmailChecker = () => {
   useEffect(() => {
     const fetchEmails = async () => {
       try {
-        const res = await axios.get("https://shieldcomms-backend.com/api/email/messages");
+        const res = await axios.get("https://shieldcomms-fyp-production.up.railway.app/api/email/messages");
         const sorted = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setEmails(sorted);
       } catch (error) {
@@ -26,7 +26,7 @@ const EmailChecker = () => {
     fetchEmails();
 
     // 🔌 Real-time socket with websocket transport forced
-    const socket = io("https://shieldcomms-backend.com", {
+    const socket = io("https://shieldcomms-fyp-production.up.railway.app", {
       transports: ["websocket"],
       path: "/socket.io"
     });

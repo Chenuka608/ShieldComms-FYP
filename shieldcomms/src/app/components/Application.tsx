@@ -71,7 +71,7 @@ const Application = () => {
   }, [router]);
 
   const handleDiscordLogin = () => {
-    window.location.href = "https://shieldcomms-backend-302307126408.us-central1.run.app/auth/discord";
+    window.location.href = "https://shieldcomms-fyp-production.up.railway.app/auth/discord";
   };
 
   const handleTelegramStart = () => {

@@ -39,7 +39,7 @@ client.on("messageCreate", async (message) => {
 
     const numericPrediction = verdict === "⚠️ Phishing" ? 1 : verdict === "🤔 Suspicious" ? 0.5 : 0;
 
-    await axios.post("https://shieldcomms-backend.com/log-discord-message", {
+    await axios.post("https://shieldcomms-fyp-production.up.railway.app/log-discord-message", {
       userId: message.author.id,
       username: message.author.username,
       message: text,

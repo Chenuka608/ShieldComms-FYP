@@ -15,7 +15,7 @@ const DiscordDashboard = () => {
 
     const fetchMessages = async () => {
       try {
-        const res = await axios.get("https://shieldcomms-backend.com/api/discord/messages", {
+        const res = await axios.get("https://shieldcomms-fyp-production.up.railway.app/api/discord/messages", {
           headers: { Authorization: `Bearer ${token}` }
         });
         const sorted = res.data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
@@ -33,7 +33,7 @@ const DiscordDashboard = () => {
     const intervalId = setInterval(fetchMessages, 300000);
 
     // 🔌 Real-time socket connection (force websocket)
-    const socket = io("https://shieldcomms-backend.com", {
+    const socket = io("https://shieldcomms-fyp-production.up.railway.app", {
       transports: ["websocket"],
       path: "/socket.io"
     });
