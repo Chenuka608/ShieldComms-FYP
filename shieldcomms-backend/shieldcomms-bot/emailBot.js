@@ -36,7 +36,7 @@ async function monitorInbox() {
             headers.Authorization = `Bearer ${process.env.TEST_JWT_TOKEN}`;
           }
 
-          const mlRes = await axios.post("https://shieldcomms-backend-302307126408.us-central1.run.app/predict", {
+          const mlRes = await axios.post("https://shieldcomms-fyp.onrender.com/predict", {
             text: email.body,
           }, { headers });
 

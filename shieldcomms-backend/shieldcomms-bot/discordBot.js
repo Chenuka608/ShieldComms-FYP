@@ -27,7 +27,7 @@ client.on("messageCreate", async (message) => {
       headers.Authorization = `Bearer ${process.env.TEST_JWT_TOKEN}`;
     }
 
-    const res = await axios.post("https://shieldcomms-backend-302307126408.us-central1.run.app/predict", { text }, { headers });
+    const res = await axios.post("https://shieldcomms-fyp.onrender.com/predict", { text }, { headers });
 
     const verdict = res.data.prediction;
     const phishing = res.data.phishing_probability.toFixed(2);

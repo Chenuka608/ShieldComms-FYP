@@ -31,7 +31,7 @@ bot.on("message", async (msg) => {
       headers.Authorization = `Bearer ${process.env.TEST_JWT_TOKEN}`;
     }
 
-    const response = await axios.post("https://shieldcomms-backend-302307126408.us-central1.run.app/predict", {
+    const response = await axios.post("https://shieldcomms-fyp.onrender.com/predict", {
       text: messageText,
     }, { headers });
 
