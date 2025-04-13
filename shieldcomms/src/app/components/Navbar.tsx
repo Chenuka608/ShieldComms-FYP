@@ -14,7 +14,7 @@ export default function Navbar() {
 
   const handleSignUp = async () => {
     try {
-      const response = await fetch("https://shieldcomms-fyp-production.up.railway.app/register", {
+      const response = await fetch("https://shieldcomms-fyp-production-1038.up.railway.app/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -33,7 +33,7 @@ export default function Navbar() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("https://shieldcomms-fyp-production.up.railway.app/login", {
+      const response = await fetch("https://shieldcomms-fyp-production-1038.up.railway.app/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
