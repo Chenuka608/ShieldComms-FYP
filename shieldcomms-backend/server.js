@@ -19,7 +19,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://shieldcomms-fyp-production-1038.up.railway.app/"],
+    origin: ["http://localhost:3000", "https://shieldcomms-fyp-production-1038.up.railway.app"],
     credentials: true,
   })
 );
@@ -30,7 +30,7 @@ const server = http.createServer(app);
 // ⬅️ Socket.IO setup
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "https://shieldcomms-fyp-production-1038.up.railway.app/"],
+    origin: ["http://localhost:3000", "https://shieldcomms-fyp-production-1038.up.railway.app"],
     methods: ["GET", "POST"]
   },
   path: "/socket.io"
@@ -200,7 +200,7 @@ app.get("/auth/discord/callback", async (req, res) => {
       expiresIn: '1h'
     });
 
-    res.redirect(`https://shield-comms-fyp-t69w.vercel.app/application?token=${token}`);
+    res.redirect(`https://shieldcomms-fyp-production-1038.up.railway.app/application?token=${token}`);
   } catch (error) {
     console.error("Discord OAuth Error:", error.message);
     res.status(500).send("Login failed");
