@@ -25,14 +25,14 @@ app.use(
   })
 );
 
-// ⬅️ Socket.IO setup
-const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "https://shield-comms-fyp-t69w.vercel.app"],
     methods: ["GET", "POST"]
-  }
+  },
+  path: "/socket.io"
 });
+
 
 io.on("connection", (socket) => {
   console.log("🟢 Socket connected:", socket.id);

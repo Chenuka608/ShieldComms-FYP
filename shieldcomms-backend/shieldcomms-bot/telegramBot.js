@@ -46,7 +46,7 @@ bot.on("message", async (msg) => {
       reply = "✅ *This message looks safe.*";
     }
 
-    await axios.post("https://shieldcomms-backend-302307126408.us-central1.run.app/log-telegram-message", {
+    await axios.post("https://shieldcomms-backend.com/log-telegram-message", {
       userId: chatId,
       username,
       message: messageText,

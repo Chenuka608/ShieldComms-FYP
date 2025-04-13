@@ -14,7 +14,7 @@ export default function Navbar() {
 
   const handleSignUp = async () => {
     try {
-      const response = await fetch("https://shieldcomms-backend-302307126408.us-central1.run.app/register", {
+      const response = await fetch("https://shieldcomms-backend.com/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -33,7 +33,7 @@ export default function Navbar() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("https://shieldcomms-backend-302307126408.us-central1.run.app/login", {
+      const response = await fetch("https://shieldcomms-backend.com/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

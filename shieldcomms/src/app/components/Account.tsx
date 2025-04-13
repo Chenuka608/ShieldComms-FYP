@@ -14,7 +14,7 @@ export default function Account() {
     const fetchAccountDetails = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('https://shieldcomms-backend-302307126408.us-central1.run.app/account', {
+        const response = await fetch('https://shieldcomms-backend.com/account', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -38,7 +38,7 @@ export default function Account() {
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://shieldcomms-backend-302307126408.us-central1.run.app/account', {
+      const response = await fetch('https://shieldcomms-backend.com/account', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
