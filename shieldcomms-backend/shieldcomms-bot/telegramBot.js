@@ -2,7 +2,7 @@ const TelegramBot = require("node-telegram-bot-api");
 const axios = require("axios");
 const dotenv = require("dotenv");
 
-dotenv.config({ path: "./.env.telegram" });
+
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
 if (!token) {
@@ -29,7 +29,7 @@ bot.on("message", async (msg) => {
 
   try {
     // 🔍 Send to ML model
-    const response = await axios.post("http://127.0.0.1:6000/predict", {
+    const response = await axios.post(" https://shieldcomms-backend-302307126408.us-central1.run.app/predict", {
       text: messageText,
     });
 
@@ -50,7 +50,7 @@ bot.on("message", async (msg) => {
     }
 
     // 💾 Log to backend
-    await axios.post("http://127.0.0.1:5000/log-telegram-message", {
+    await axios.post(" https://shieldcomms-backend-302307126408.us-central1.run.app/log-telegram-message", {
       userId: chatId,
       username,
       message: messageText,

@@ -1,8 +1,8 @@
 const { MailSlurp } = require("mailslurp-client");
-const dotenv = require("dotenv");
+require("dotenv").config(); // ✅ Single .env is loaded
 const axios = require("axios");
 
-dotenv.config({ path: "./.env.mailslurp" });
+
 
 const mailslurp = new MailSlurp({ apiKey: process.env.MAILSLURP_API_KEY });
 const inboxId = process.env.MAILSLURP_INBOX_ID;
@@ -36,7 +36,7 @@ async function monitorInbox() {
 
           console.log(`📨 Processing Email: ${email.subject}`);
 
-          const mlRes = await axios.post("http://127.0.0.1:6000/predict", {
+          const mlRes = await axios.post(" https://shieldcomms-backend-302307126408.us-central1.run.app/predict", {
             text: email.body,
           });
 
@@ -46,7 +46,7 @@ async function monitorInbox() {
             non_phishing_probability,
           } = mlRes.data;
 
-          await axios.post("http://127.0.0.1:5000/log-email-message", {
+          await axios.post(" https://shieldcomms-backend-302307126408.us-central1.run.app/log-email-message", {
             sender: email.from?.[0]?.emailAddress || "Unknown Sender",
             subject: email.subject || "(No Subject)",
             body: email.body,

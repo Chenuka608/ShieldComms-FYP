@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits } = require("discord.js");
 const axios = require("axios");
-require("dotenv").config({ path: ".env.bot" });
+require("dotenv").config(); // ✅ Single .env is loaded
+
 
 // Debug: Confirm environment variables
 console.log("🔐 Bot Token Loaded:", process.env.DISCORD_BOT_TOKEN ? "✅" : "❌");
@@ -27,7 +28,7 @@ client.on("messageCreate", async (message) => {
   try {
     // 🔍 Step 1: Send message to ML model
     const res = await axios.post(
-      "http://127.0.0.1:6000/predict",
+      " https://shieldcomms-backend-302307126408.us-central1.run.app/predict",
       { text },
       {
         headers: {
@@ -52,7 +53,7 @@ client.on("messageCreate", async (message) => {
       verdict === "🤔 Suspicious" ? 0.5 : 0;
 
     // 💾 Step 4: Log to backend
-    await axios.post("http://127.0.0.1:5000/log-discord-message", {
+    await axios.post(" https://shieldcomms-backend-302307126408.us-central1.run.app/log-discord-message", {
       userId: message.author.id,
       username: message.author.username,
       message: message.content,
