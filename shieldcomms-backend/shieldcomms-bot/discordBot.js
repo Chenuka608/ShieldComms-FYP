@@ -1,13 +1,10 @@
 const { Client, GatewayIntentBits } = require("discord.js");
 const axios = require("axios");
-require("dotenv").config(); // ✅ Single .env is loaded
+require("dotenv").config(); // ✅ Loads .env
 
-
-// Debug: Confirm environment variables
 console.log("🔐 Bot Token Loaded:", process.env.DISCORD_BOT_TOKEN ? "✅" : "❌");
 console.log("🔐 JWT Token Loaded:", process.env.TEST_JWT_TOKEN ? "✅" : "❌");
 
-// Create Discord client
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -24,57 +21,42 @@ client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
   const text = message.content;
-
   try {
-    // 🔍 Step 1: Send message to ML model
-    const res = await axios.post("https://shieldcomms-backend-302307126408.us-central1.run.app/predict",
-      { text },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.TEST_JWT_TOKEN}`, // Optional
-        },
-      }
-    );
+    const headers = {};
+    if (process.env.TEST_JWT_TOKEN) {
+      headers.Authorization = `Bearer ${process.env.TEST_JWT_TOKEN}`;
+    }
 
-    // ✅ Step 2: Extract and interpret result
+    const res = await axios.post("https://shieldcomms-backend-302307126408.us-central1.run.app/predict", { text }, { headers });
+
     const verdict = res.data.prediction;
     const phishing = res.data.phishing_probability.toFixed(2);
     const legit = res.data.non_phishing_probability.toFixed(2);
 
-    // Reply in Discord
     await message.reply(
       `🛡️ **ShieldComms Verdict:** ${verdict}\n\n📊 **Phishing:** ${phishing}%\n✅ **Legitimate:** ${legit}%`
     );
 
-    // Step 3: Convert prediction to numeric for DB
-    const numericPrediction =
-      verdict === "⚠️ Phishing" ? 1 :
-      verdict === "🤔 Suspicious" ? 0.5 : 0;
+    const numericPrediction = verdict === "⚠️ Phishing" ? 1 : verdict === "🤔 Suspicious" ? 0.5 : 0;
 
-    // 💾 Step 4: Log to backend
     await axios.post("https://shieldcomms-backend-302307126408.us-central1.run.app/log-discord-message", {
       userId: message.author.id,
       username: message.author.username,
-      message: message.content,
+      message: text,
       prediction: numericPrediction,
       phishing_probability: res.data.phishing_probability,
       non_phishing_probability: res.data.non_phishing_probability,
       timestamp: new Date().toISOString()
     });
-
   } catch (err) {
-    console.error("❌ Error checking phishing:", err.message);
-    if (err.response) {
-      console.error("🔎 Backend error:", err.response.data);
-    }
+    console.error("❌ Discord Bot Error:", err.message);
+    if (err.response) console.error("🔎 Backend error:", err.response.data);
     await message.reply("❌ Error: Could not check this message for phishing.");
   }
 });
 
-// Handle unhandled rejections
-process.on('unhandledRejection', (reason, promise) => {
+process.on('unhandledRejection', (reason) => {
   console.error('Unhandled Rejection:', reason);
 });
 
-// Start the bot
 client.login(process.env.DISCORD_BOT_TOKEN);

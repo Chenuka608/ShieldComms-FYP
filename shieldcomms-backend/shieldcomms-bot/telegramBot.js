@@ -26,18 +26,17 @@ bot.on("message", async (msg) => {
   }
 
   try {
-    // 🔍 Send message to ML model
+    const headers = {};
+    if (process.env.TEST_JWT_TOKEN) {
+      headers.Authorization = `Bearer ${process.env.TEST_JWT_TOKEN}`;
+    }
+
     const response = await axios.post("https://shieldcomms-backend-302307126408.us-central1.run.app/predict", {
       text: messageText,
-    });
+    }, { headers });
 
-    const {
-      prediction,
-      phishing_probability,
-      non_phishing_probability,
-    } = response.data;
+    const { prediction, phishing_probability, non_phishing_probability } = response.data;
 
-    // 🟡 Smarter reply logic
     let reply;
     if (prediction === "⚠️ Phishing") {
       reply = "⚠️ *Phishing detected!*\nBe cautious with this message.";
@@ -47,7 +46,6 @@ bot.on("message", async (msg) => {
       reply = "✅ *This message looks safe.*";
     }
 
-    // 💾 Log to backend
     await axios.post("https://shieldcomms-backend-302307126408.us-central1.run.app/log-telegram-message", {
       userId: chatId,
       username,
@@ -58,7 +56,6 @@ bot.on("message", async (msg) => {
       timestamp: new Date().toISOString()
     });
 
-    // 💬 Reply to user
     bot.sendMessage(chatId, reply, { parse_mode: "Markdown" });
 
   } catch (error) {
