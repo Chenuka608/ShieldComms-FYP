@@ -7,7 +7,7 @@ import re
 import os
 import gdown
 
-# Download model and vectorizer if not present
+# 🔽 Download model and vectorizer if not present
 def download_from_drive():
     model_url = "https://drive.google.com/uc?id=1xJTUfLUN-HQxmhvj5j66tyX5EVAxeRDV"
     vectorizer_url = "https://drive.google.com/uc?id=1BK62H6MvXV1L3tPDeLE8AR-gMyflkmDJ"
@@ -19,7 +19,7 @@ def download_from_drive():
 
 download_from_drive()
 
-# Load model and vectorizer
+# 🔽 Load model and vectorizer
 model = tf.keras.models.load_model("ShieldCommsML.h5")
 tfidf_vectorizer = joblib.load("tfidf_vectorizer.pkl")
 EXPECTED_INPUT_DIM = model.input_shape[1]
@@ -57,10 +57,19 @@ def phishing_score(text):
 class EmailInput(BaseModel):
     text: str
 
-# ✅ Inference route
+# ✅ Inference route with short message filter
 @app.post("/predict")
 async def predict_email(input_data: EmailInput):
-    email_text = input_data.text
+    email_text = input_data.text.strip()
+
+    # 🚨 If message is too short, mark as Suspicious
+    if len(email_text.split()) < 5:
+        return {
+            "prediction": "🤔 Suspicious",
+            "phishing_probability": 50.0,
+            "non_phishing_probability": 50.0,
+            "phishing_score": phishing_score(email_text)
+        }
 
     # TF-IDF vector
     input_vector = tfidf_vectorizer.transform([email_text]).toarray()
@@ -101,5 +110,5 @@ async def predict_email(input_data: EmailInput):
 # ✅ Run with Uvicorn (for Cloud Run or Render)
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.environ.get("PORT", 8080))  # Default for Cloud Run
+    port = int(os.environ.get("PORT", 8080))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
