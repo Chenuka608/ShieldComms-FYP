@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import ShowHero from "./components/ShowHero"; // 🔥 new component
+import GlobalNotifier from "./components/GlobalNotifier"; // ✅ Add this
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <Navbar />
-       
+        <GlobalNotifier /> {/* 🔔 Live notifications component */}
         {children}
         <Footer />
       </body>
