@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-// Create a User Schema with a username field
+// Create a clean User Schema (no username)
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  username: { type: String, required: false, unique: true },  // Add username field
 });
 
 // Hash password before saving
@@ -15,5 +14,4 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// Create the User model with the username field
 module.exports = mongoose.model('User', userSchema);
