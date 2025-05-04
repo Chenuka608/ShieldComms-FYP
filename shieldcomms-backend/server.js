@@ -68,26 +68,26 @@ app.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Basic input validation
+    //  Validate input
     if (!email || !password) {
       return res.status(400).send("Email and password are required");
     }
 
-    // Optional: Check for existing user
+    //  Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).send("Email already in use");
+      return res.status(400).send("Email is already registered");
     }
 
-    // ✅ Hash password before storing
+    // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ email, password: hashedPassword });
     await user.save();
 
-    res.status(201).send('User registered successfully');
+    res.status(201).send("User registered successfully");
   } catch (error) {
-    console.error('Error registering user:', error);
-    res.status(400).send('Error registering user');
+    console.error("Registration error:", error.message);
+    res.status(500).send("Server error during registration");
   }
 });
 
