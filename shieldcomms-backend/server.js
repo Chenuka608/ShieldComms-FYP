@@ -63,25 +63,23 @@ const authenticate = (req, res, next) => {
     res.status(400).send('Invalid token');
   }
 };
-
 app.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    //  Validate input
+    // Validate input
     if (!email || !password) {
       return res.status(400).send("Email and password are required");
     }
 
-    //  Check if user already exists
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).send("Email is already registered");
     }
 
-    // Hash the password before saving
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ email, password: hashedPassword });
+    // ❌ Don't hash here — let the schema do it
+    const user = new User({ email, password });
     await user.save();
 
     res.status(201).send("User registered successfully");
@@ -90,6 +88,7 @@ app.post('/register', async (req, res) => {
     res.status(500).send("Server error during registration");
   }
 });
+
 
 
 app.post('/login', async (req, res) => {
